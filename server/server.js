@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import errorMiddleware from './lib/error-middleware.js';
 import pg from 'pg';
+import ClientError from './lib/client-error.js';
+import argon2 from 'argon2';
 
 // eslint-disable-next-line no-unused-vars -- Remove when used
 const db = new pg.Pool({
@@ -24,6 +26,47 @@ app.use(express.json());
 
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
+});
+
+app.post('/api/auth/sign-up', async (req, res, next) => {
+  try {
+    //   console.log("req.body", req.body)
+    const { userName, password, firstName, lastName, email, phoneNumber } =
+      req.body;
+    // console.log(userName, password, firstName, lastName, email, phoneNumber)
+    if (
+      !userName ||
+      !password ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phoneNumber
+    ) {
+      throw new ClientError(400, 'All fields are required');
+    }
+    const hashedPassword = await argon2.hash(password);
+    console.log(hashedPassword);
+    const sql = `
+      insert into "users" ("firstName", "lastName", "email", "phoneNumber", "userName", "hashedPassword")
+        values ($1, $2, $3, $4, $5, $6)
+        returning "userId", "firstName", "lastName", "email", "phoneNumber", "userName", "hashedPassword"
+    `;
+    const params = [
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      userName,
+      hashedPassword,
+    ];
+    const result = await db.query(sql, params);
+    // console.log(result)
+    const [user] = result.rows;
+    // console.log(user)
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
 });
 
 /**
