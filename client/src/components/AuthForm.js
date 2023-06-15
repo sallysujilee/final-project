@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signUpOrIn } from '../lib';
 
 export default function AuthForm({ action, onSignIn }) {
+  console.log(onSignIn);
   const navigate = useNavigate();
   const [error, setError] = useState();
 
@@ -35,6 +36,96 @@ export default function AuthForm({ action, onSignIn }) {
   const alternateActionText =
     action === 'sign-up' ? 'Sign in instead' : 'Register now';
   const submitButtonText = action === 'sign-up' ? 'Register' : 'Log In';
+
+  if (action === 'sign-up') {
+    return (
+      <form className="w-100" onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">
+            Username:
+            <input
+              required
+              autoFocus
+              type="text"
+              name="userName"
+              className="form-control bg-light"
+            />
+          </label>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">
+            Password:
+            <input
+              required
+              type="password"
+              name="password"
+              className="form-control bg-light"
+            />
+          </label>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">
+            First Name:
+            <input
+              required
+              autoFocus
+              type="text"
+              name="firstName"
+              className="form-control bg-light"
+            />
+          </label>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">
+            Last Name:
+            <input
+              required
+              autoFocus
+              type="text"
+              name="lastName"
+              className="form-control bg-light"
+            />
+          </label>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">
+            Phone Number:
+            <input
+              required
+              autoFocus
+              type="text"
+              name="phoneNumber"
+              className="form-control bg-light"
+            />
+          </label>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">
+            E-Mail:
+            <input
+              required
+              autoFocus
+              type="text"
+              name="email"
+              className="form-control bg-light"
+            />
+          </label>
+        </div>
+        <div className="d-flex justify-content-between align-items-center">
+          <small>
+            <Link className="text-muted" to={alternateActionTo}>
+              {alternateActionText}
+            </Link>
+          </small>
+          <button type="submit" className="btn btn-primary">
+            {submitButtonText}
+          </button>
+        </div>
+        {error && <div style={{ color: 'red' }}>Error: {error.message}</div>}
+      </form>
+    );
+  }
+
   return (
     <form className="w-100" onSubmit={handleSubmit}>
       <div className="mb-3">
@@ -56,54 +147,6 @@ export default function AuthForm({ action, onSignIn }) {
             required
             type="password"
             name="password"
-            className="form-control bg-light"
-          />
-        </label>
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          First Name:
-          <input
-            required
-            autoFocus
-            type="text"
-            name="firstName"
-            className="form-control bg-light"
-          />
-        </label>
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          Last Name:
-          <input
-            required
-            autoFocus
-            type="text"
-            name="lastName"
-            className="form-control bg-light"
-          />
-        </label>
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          Phone Number:
-          <input
-            required
-            autoFocus
-            type="text"
-            name="phoneNumber"
-            className="form-control bg-light"
-          />
-        </label>
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          E-Mail:
-          <input
-            required
-            autoFocus
-            type="text"
-            name="email"
             className="form-control bg-light"
           />
         </label>
