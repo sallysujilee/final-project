@@ -8,7 +8,7 @@ import homepageimg from '../images/homepageimg.jpg';
 
 export default function Home() {
   const navigate = useNavigate();
-  const user = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     if (!user) navigate('/sign-in');
