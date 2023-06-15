@@ -25,13 +25,28 @@ export async function signUp(username, password) {
  * @param {sting} password The user's password.
  * @returns Promise that resolves to user (sign-up) or `{ token, user }` (sign-in).
  */
-export async function signUpOrIn(action, username, password) {
+export async function signUpOrIn(
+  action,
+  userName,
+  password,
+  firstName,
+  lastName,
+  phoneNumber,
+  email
+) {
   const req = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({
+      userName,
+      password,
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+    }),
   };
   const res = await fetch(`/api/auth/${action}`, req);
   if (!res.ok) throw new Error(`fetch Error ${res.status}`);

@@ -8,3 +8,34 @@
 .gif {
   position: absolute;
 }
+
+.homepageimg {
+  height: 100%;
+  width: 100%;
+  filter: brightness(50%);
+}
+
+/* .text-container {
+  position: relative;
+  bottom: 27rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
+  background-color: rgba(217, 217, 217, 80%);
+  padding: 10px;
+  border-radius: 10px;
+  border: 4px solid #4F709C;
+}
+
+.homepage-welcome-title {
+  font-size: 2.5rem;
+  padding-top: 2rem;
+}
+
+.homepage-welcome-text {
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  padding-top: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 2rem;
+} */

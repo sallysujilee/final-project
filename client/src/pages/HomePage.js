@@ -4,6 +4,7 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../components/AppContext';
 import './HomePage.css';
+import homepageimg from '../images/homepageimg.jpg';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -15,14 +16,15 @@ export default function Home() {
 
   return (
     <div className="gif-container">
-      <iframe
-        title="Rick Roll"
-        src="https://giphy.com/embed/Ju7l5y9osyymQ"
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        className="gif"
-      />
+      <img className="homepageimg" src={homepageimg} alt="homepageimg" />
+      <div className="text-container">
+        <div className="homepage-welcome-title">Welcome to Senior Project!</div>
+        <div className="homepage-welcome-text">
+          Where all your project needs can be found. From photography, to
+          graphic design, and web development, these services are guaranteed
+          quality for your vision.
+        </div>
+      </div>
     </div>
   );
 }

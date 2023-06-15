@@ -4,8 +4,10 @@ import { Link, Outlet } from 'react-router-dom';
 import AppContext from '../components/AppContext';
 
 export default function Navbar() {
-  const user = useContext(AppContext);
-  const handleSignOut = useContext(AppContext);
+  const { user } = useContext(AppContext);
+  const { handleSignOut } = useContext(AppContext);
+  const context = useContext(AppContext);
+  console.log(context);
 
   return (
     <div>

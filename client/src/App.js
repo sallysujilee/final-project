@@ -16,16 +16,16 @@ export default function App() {
   const [isAuthorizing, setIsAuthorizing] = useState(true);
 
   useEffect(() => {
-    async function readServerData() {
-      const resp = await fetch('/api/hello');
-      const data = await resp.json();
+    // async function readServerData() {
+    //   const resp = await fetch('/api/hello');
+    //   const data = await resp.json();
 
-      console.log('Data from server:', data);
+    //   console.log('Data from server:', data);
 
-      setServerData(data.message);
-    }
+    //   setServerData(data.message);
+    // }
 
-    readServerData();
+    // readServerData();
 
     // If user logged in previously on this browser, authorize them
     const auth = localStorage.getItem(tokenKey);
@@ -55,9 +55,6 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>{serverData}</h1>
-      </header>
       <AppContext.Provider value={contextValue}>
         <Routes>
           <Route path="/" element={<NavBar />}>
@@ -66,6 +63,7 @@ export default function App() {
             <Route path="sign-up" element={<Auth action="sign-up" />} />
             <Route path="*" element={<NotFound />} />
           </Route>
+          {/* <Route path="/favorites" /> */}
         </Routes>
       </AppContext.Provider>
     </div>

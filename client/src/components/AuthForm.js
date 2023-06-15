@@ -9,9 +9,18 @@ export default function AuthForm({ action, onSignIn }) {
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const { username, password } = Object.fromEntries(formData.entries());
+    const { userName, password, firstName, lastName, phoneNumber, email } =
+      Object.fromEntries(formData.entries());
     try {
-      const result = await signUpOrIn(action, username, password);
+      const result = await signUpOrIn(
+        action,
+        userName,
+        password,
+        firstName,
+        lastName,
+        phoneNumber,
+        email
+      );
       if (action === 'sign-up') {
         navigate('/sign-in');
       } else if (result.user && result.token) {
@@ -35,7 +44,7 @@ export default function AuthForm({ action, onSignIn }) {
             required
             autoFocus
             type="text"
-            name="username"
+            name="userName"
             className="form-control bg-light"
           />
         </label>
@@ -47,6 +56,54 @@ export default function AuthForm({ action, onSignIn }) {
             required
             type="password"
             name="password"
+            className="form-control bg-light"
+          />
+        </label>
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          First Name:
+          <input
+            required
+            autoFocus
+            type="text"
+            name="firstName"
+            className="form-control bg-light"
+          />
+        </label>
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Last Name:
+          <input
+            required
+            autoFocus
+            type="text"
+            name="lastName"
+            className="form-control bg-light"
+          />
+        </label>
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Phone Number:
+          <input
+            required
+            autoFocus
+            type="text"
+            name="phoneNumber"
+            className="form-control bg-light"
+          />
+        </label>
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          E-Mail:
+          <input
+            required
+            autoFocus
+            type="text"
+            name="email"
             className="form-control bg-light"
           />
         </label>
