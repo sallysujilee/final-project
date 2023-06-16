@@ -15,8 +15,8 @@ export default function Home() {
   }, [user, navigate]);
 
   return (
-    <div className="gif-container">
-      <img className="homepageimg" src={homepageimg} alt="homepageimg" />
+    <div className="main-container">
+      <img className="homepage-img" src={homepageimg} alt="homepage img" />
       <div className="text-container">
         <div className="homepage-welcome-title">Welcome to Senior Project!</div>
         <div className="homepage-welcome-text">

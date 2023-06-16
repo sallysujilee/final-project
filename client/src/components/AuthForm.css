@@ -1,0 +1,43 @@
+.mb-3 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #d2d2d2;
+  padding: 5px;
+}
+
+.sign-in-button {
+  background-color: #4f709c;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 20px;
+}
+
+.dont-line {
+  margin-right: 5px;
+}
+
+.sign-up-line {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.register-submit {
+  background-color: #4f709c;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 20px;
+  margin-top: 1rem;
+}
+
+.sign-in-line {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

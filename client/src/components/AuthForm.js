@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signUpOrIn } from '../lib';
+import './AuthForm.css';
 
 export default function AuthForm({ action, onSignIn }) {
   console.log(onSignIn);
@@ -42,84 +43,87 @@ export default function AuthForm({ action, onSignIn }) {
       <form className="w-100" onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">
-            Username:
             <input
               required
               autoFocus
               type="text"
               name="userName"
-              className="form-control bg-light"
+              className="form-control bg-light username-input"
+              placeholder="Username"
             />
           </label>
         </div>
         <div className="mb-3">
           <label className="form-label">
-            Password:
             <input
               required
               type="password"
               name="password"
-              className="form-control bg-light"
+              className="form-control bg-light password-input"
+              placeholder="Password"
             />
           </label>
         </div>
         <div className="mb-3">
           <label className="form-label">
-            First Name:
             <input
               required
               autoFocus
               type="text"
               name="firstName"
               className="form-control bg-light"
+              placeholder="First Name"
             />
           </label>
         </div>
         <div className="mb-3">
           <label className="form-label">
-            Last Name:
             <input
               required
               autoFocus
               type="text"
               name="lastName"
               className="form-control bg-light"
+              placeholder="Last Name"
             />
           </label>
         </div>
         <div className="mb-3">
           <label className="form-label">
-            Phone Number:
             <input
               required
               autoFocus
               type="text"
               name="phoneNumber"
               className="form-control bg-light"
+              placeholder="Phone Number"
             />
           </label>
         </div>
         <div className="mb-3">
           <label className="form-label">
-            E-Mail:
             <input
               required
               autoFocus
               type="text"
               name="email"
               className="form-control bg-light"
+              placeholder="E-Mail"
             />
           </label>
         </div>
         <div className="d-flex justify-content-between align-items-center">
-          <small>
-            <Link className="text-muted" to={alternateActionTo}>
-              {alternateActionText}
-            </Link>
-          </small>
-          <button type="submit" className="btn btn-primary">
-            {submitButtonText}
+          <button type="submit" className="btn btn-primary register-submit">
+            Register
           </button>
+          <small>
+            <div className="sign-in-line">
+              <div className="have-account-line"> Already have an account?</div>
+              <Link className="text-muted" to={alternateActionTo}>
+                Sign in here!
+              </Link>
+            </div>
+          </small>
         </div>
         {error && <div style={{ color: 'red' }}>Error: {error.message}</div>}
       </form>
@@ -130,36 +134,39 @@ export default function AuthForm({ action, onSignIn }) {
     <form className="w-100" onSubmit={handleSubmit}>
       <div className="mb-3">
         <label className="form-label">
-          Username:
           <input
             required
             autoFocus
             type="text"
             name="userName"
             className="form-control bg-light"
+            placeholder="Username"
           />
         </label>
       </div>
       <div className="mb-3">
         <label className="form-label">
-          Password:
           <input
             required
             type="password"
             name="password"
             className="form-control bg-light"
+            placeholder="Password"
           />
         </label>
       </div>
       <div className="d-flex justify-content-between align-items-center">
-        <small>
-          <Link className="text-muted" to={alternateActionTo}>
-            {alternateActionText}
-          </Link>
-        </small>
-        <button type="submit" className="btn btn-primary">
-          {submitButtonText}
+        <button type="submit" className="btn btn-primary sign-in-button">
+          Sign In
         </button>
+        <small>
+          <div className="sign-up-line">
+            <div className="dont-line">Don't have an account?</div>
+            <Link className="text-muted" to={alternateActionTo}>
+              Sign Up
+            </Link>
+          </div>
+        </small>
       </div>
       {error && <div style={{ color: 'red' }}>Error: {error.message}</div>}
     </form>

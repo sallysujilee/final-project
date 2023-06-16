@@ -1,29 +1,24 @@
-.gif-container {
-  width: 100%;
-  height: 100%;
-  padding-bottom: 75%;
-  position: relative;
-}
-
-.gif {
-  position: absolute;
-}
-
-.homepageimg {
-  height: 100%;
-  width: 100%;
+.homepage-img {
+  object-fit: fill;
+  height: 100vh;
   filter: brightness(50%);
+  margin-top: 3rem;
 }
 
-/* .text-container {
+.main-container {
+  background-color: #f5efe7;
+}
+
+.text-container {
   position: relative;
-  bottom: 27rem;
-  margin-left: 6rem;
-  margin-right: 6rem;
+  bottom: 50rem;
+  margin-left: 10%;
+  margin-right: 10%;
   background-color: rgba(217, 217, 217, 80%);
   padding: 10px;
-  border-radius: 10px;
-  border: 4px solid #4F709C;
+  border-radius: 20px;
+  border: 4px solid #4f709c;
+  background-position: 50% 50%;
 }
 
 .homepage-welcome-title {
@@ -38,4 +33,10 @@
   padding-left: 3rem;
   padding-right: 3rem;
   padding-bottom: 2rem;
+}
+
+/* ////////////////media phone sizing////////////////////////////// */
+
+/* @media screen and (width >= 765px) {
+
 } */

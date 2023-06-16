@@ -2,6 +2,8 @@
 import React, { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import AppContext from '../components/AppContext';
+import './NavBar.css';
+import logo from '../images/logo.jpeg';
 
 export default function Navbar() {
   const { user } = useContext(AppContext);
@@ -13,21 +15,24 @@ export default function Navbar() {
     <div>
       <nav className="navbar navbar-dark bg-dark">
         <div className="container">
+          <img className="logo" src={logo} alt="logo img" />
           <Link className="navbar-brand" to="/">
-            Awesome App
+            Senior Project
           </Link>
           <div>
             {user && (
-              <button className="btn btn-dark" onClick={handleSignOut}>
+              <button
+                className="btn btn-dark sign-out-button"
+                onClick={handleSignOut}>
                 Sign out
               </button>
             )}
             {!user && (
               <>
-                <Link to="/sign-in" className="btn btn-primary">
+                <Link to="/sign-in" className="btn btn-primary nav-sign-in">
                   Sign In
                 </Link>
-                <Link to="/sign-up" className="btn btn-dark">
+                <Link to="/sign-up" className="btn btn-dark nav-sign-up">
                   Sign Up
                 </Link>
               </>
