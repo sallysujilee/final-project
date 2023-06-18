@@ -1,0 +1,14 @@
+.camera-icon-img,
+.gd-icon-img,
+.web-dev-img {
+  width: 10rem;
+  background-color: #d8c4b6;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5rem;
+}

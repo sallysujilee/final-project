@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom';
 import AppContext from '../components/AppContext';
 import './NavBar.css';
 import logo from '../images/logo.jpeg';
+import '../pages/ServicesPage.js';
 
 export default function Navbar() {
   const { user } = useContext(AppContext);
@@ -18,6 +19,9 @@ export default function Navbar() {
           <img className="logo" src={logo} alt="logo img" />
           <Link className="navbar-brand" to="/">
             Senior Project
+          </Link>
+          <Link className="navbar-services" to="/Services" activeStyle>
+            Services
           </Link>
           <div>
             {user && (

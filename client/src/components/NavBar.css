@@ -47,3 +47,8 @@
 a:link {
   text-decoration: none;
 }
+
+.navbar-services {
+  color: white;
+  float: right;
+}
