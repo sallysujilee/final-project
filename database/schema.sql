@@ -21,28 +21,31 @@ CREATE TABLE "public"."users" (
 
 
 
-CREATE TABLE "public"."Services" (
-	"serviceId" serial NOT NULL,
-	"name" TEXT NOT NULL,
-	"description" TEXT NOT NULL,
-	"price" TEXT NOT NULL,
-	"createdAt" DATE NOT NULL,
-	"updatedAt" DATE NOT NULL,
-	CONSTRAINT "Services_pk" PRIMARY KEY ("serviceId")
-) WITH (
-  OIDS=FALSE
-);
+-- CREATE TABLE "public"."Services" (
+-- 	-- "serviceId" serial NOT NULL,
+-- 	"name" TEXT NOT NULL,
+-- 	"description" TEXT NOT NULL,
+-- 	"price" TEXT NOT NULL,
+-- 	"createdAt" DATE NOT NULL,
+-- 	"updatedAt" DATE NOT NULL,
+-- 	CONSTRAINT "Services_pk" PRIMARY KEY ("serviceId")
+-- ) WITH (
+--   OIDS=FALSE
+-- );
 
 
 
 CREATE TABLE "public"."orders" (
 	"orderId" serial NOT NULL,
 	"userId" integer NOT NULL,
-	"serviceId" integer NOT NULL,
-	"orderEmail" TEXT NOT NULL,
-	"totalAmount" money NOT NULL,
-	"createdAt" DATE NOT NULL,
-	"updatedAt" DATE NOT NULL,
+	"serviceType" TEXT NOT NULL,
+  "firstName" TEXT NOT NULL,
+  "lastName" TEXT NOT NULL,
+  "companyName" TEXT NOT NULL,
+  "email" TEXT NOT NULL,
+	"description" TEXT NOT NULL,
+  "references" TEXT NOT NULL,
+	"price" TEXT NOT NULL,
 	CONSTRAINT "orders_pk" PRIMARY KEY ("orderId")
 ) WITH (
   OIDS=FALSE
@@ -53,4 +56,4 @@ CREATE TABLE "public"."orders" (
 
 
 ALTER TABLE "orders" ADD CONSTRAINT "orders_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
-ALTER TABLE "orders" ADD CONSTRAINT "orders_fk1" FOREIGN KEY ("serviceId") REFERENCES "Services"("serviceId");
+-- ALTER TABLE "orders" ADD CONSTRAINT "orders_fk1" FOREIGN KEY ("serviceId") REFERENCES "Services"("serviceId");

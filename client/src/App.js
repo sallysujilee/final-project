@@ -7,6 +7,7 @@ import Home from './pages/HomePage';
 import NotFound from './pages/NotFoundPage';
 import './App.css';
 import Services from './pages/ServicesPage';
+import ServicesForm from './pages/ServicesFormPage';
 
 const tokenKey = 'react-context-jwt';
 
@@ -64,6 +65,7 @@ export default function App() {
             <Route path="sign-up" element={<Auth action="sign-up" />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/servicesform" element={<ServicesForm />} />
           </Route>
           {/* <Route path="/favorites" /> */}
         </Routes>

@@ -103,6 +103,69 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
   }
 });
 
+app.post('/api/orders/:id', async (req, res, next) => {
+  console.log('correct endpoint hit');
+  const { id } = req.params;
+  console.log('id', id);
+  try {
+    const {
+      firstName,
+      lastName,
+      companyName,
+      email,
+      serviceType,
+      description,
+      references,
+      price,
+    } = req.body.postRequestObject;
+    console.log(
+      firstName,
+      lastName,
+      companyName,
+      email,
+      serviceType,
+      description,
+      references,
+      price
+    );
+    const sql = `
+      insert into "orders" ("firstName", "lastName", "companyName", "email", "serviceType", "description", "references", "price", "userId")
+        values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        returning "firstName", "lastName", "companyName", "email", "serviceType", "description", "references", "price"
+
+    `;
+    const params = [
+      firstName,
+      lastName,
+      companyName,
+      email,
+      serviceType,
+      description,
+      references,
+      price,
+      id,
+    ];
+    const result = await db.query(sql, params);
+    // console.log(result)
+    const [user] = result.rows;
+    // console.log(user)
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+// destructure JSON from HTTP req into terminal
+// log values (console.log)
+// write SQL query to insert new row into 'orders' database table
+//   const sql = `
+//   insert "userId",
+//       "hashedPassword"
+//     from "users"
+//   where "userName" = $1
+// `;
+// ***but put in all the stuff from the forms (firstname, etc.)
+// });
+
 /**
  * Serves React's index.html if no api route matches.
  *
