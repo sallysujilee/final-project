@@ -64,10 +64,14 @@ export default function ServiceForm() {
       await fetch(`api/orders/${user.userId}`, req);
     }
     postData();
+    document.getElementById('form-container').reset();
   }
   return (
     <div className="service-form-container">
-      <form className="form-container" onSubmit={handleSubmit}>
+      <form
+        className="form-container"
+        id="form-container"
+        onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="form-label">
             First Name
