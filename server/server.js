@@ -2,6 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import errorMiddleware from './lib/error-middleware.js';
 import pg from 'pg';
+import ClientError from './lib/client-error.js';
+import argon2 from 'argon2';
+import jwt from 'jsonwebtoken';
 
 // eslint-disable-next-line no-unused-vars -- Remove when used
 const db = new pg.Pool({
@@ -25,6 +28,143 @@ app.use(express.json());
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
+
+app.post('/api/auth/sign-up', async (req, res, next) => {
+  try {
+    //   console.log("req.body", req.body)
+    const { userName, password, firstName, lastName, email, phoneNumber } =
+      req.body;
+    // console.log(userName, password, firstName, lastName, email, phoneNumber)
+    if (
+      !userName ||
+      !password ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phoneNumber
+    ) {
+      throw new ClientError(400, 'All fields are required');
+    }
+    const hashedPassword = await argon2.hash(password);
+    console.log(hashedPassword);
+    const sql = `
+      insert into "users" ("firstName", "lastName", "email", "phoneNumber", "userName", "hashedPassword")
+        values ($1, $2, $3, $4, $5, $6)
+        returning "userId", "firstName", "lastName", "email", "phoneNumber", "userName", "hashedPassword"
+    `;
+    const params = [
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      userName,
+      hashedPassword,
+    ];
+    const result = await db.query(sql, params);
+    // console.log(result)
+    const [user] = result.rows;
+    // console.log(user)
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post('/api/auth/sign-in', async (req, res, next) => {
+  try {
+    console.log('req.body', req.body);
+    const { userName, password } = req.body;
+    console.log(userName);
+    if (!userName || !password) {
+      throw new ClientError(401, 'invalid login');
+    }
+    const sql = `
+      select "userId",
+          "hashedPassword"
+        from "users"
+      where "userName" = $1
+    `;
+    const params = [userName];
+    const result = await db.query(sql, params);
+    const [user] = result.rows;
+
+    if (!user) {
+      throw new ClientError(401, 'invalid login');
+    }
+    const { userId, hashedPassword } = user;
+    if (!(await argon2.verify(hashedPassword, password))) {
+      throw new ClientError(401, 'invalid login');
+    }
+    const payload = { userId, userName };
+    const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+    res.json({ token, user: payload });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post('/api/orders/:id', async (req, res, next) => {
+  console.log('correct endpoint hit');
+  const { id } = req.params;
+  console.log('id', id);
+  try {
+    const {
+      firstName,
+      lastName,
+      companyName,
+      email,
+      serviceType,
+      description,
+      references,
+      price,
+    } = req.body.postRequestObject;
+    console.log(
+      firstName,
+      lastName,
+      companyName,
+      email,
+      serviceType,
+      description,
+      references,
+      price
+    );
+    const sql = `
+      insert into "orders" ("firstName", "lastName", "companyName", "email", "serviceType", "description", "references", "price", "userId")
+        values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        returning "firstName", "lastName", "companyName", "email", "serviceType", "description", "references", "price"
+
+    `;
+    const params = [
+      firstName,
+      lastName,
+      companyName,
+      email,
+      serviceType,
+      description,
+      references,
+      price,
+      id,
+    ];
+    const result = await db.query(sql, params);
+    // console.log(result)
+    const [user] = result.rows;
+    // console.log(user)
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+// destructure JSON from HTTP req into terminal
+// log values (console.log)
+// write SQL query to insert new row into 'orders' database table
+//   const sql = `
+//   insert "userId",
+//       "hashedPassword"
+//     from "users"
+//   where "userName" = $1
+// `;
+// ***but put in all the stuff from the forms (firstname, etc.)
+// });
 
 /**
  * Serves React's index.html if no api route matches.

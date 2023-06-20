@@ -1,0 +1,54 @@
+.navbar {
+  background-color: #213555;
+  padding: 2.5rem;
+}
+
+.navbar-brand {
+  color: white;
+  position: relative;
+  float: left;
+  right: 20px;
+  bottom: 10px;
+}
+
+.sign-out-button {
+  border: none;
+  background-color: #213555;
+  color: white;
+  position: relative;
+  float: right;
+  left: 30px;
+  top: 2.8rem;
+  padding: 7px 10px;
+  border-radius: 10px;
+}
+
+.logo {
+  width: 3rem;
+  position: relative;
+  float: left;
+  bottom: 24px;
+  right: 30px;
+}
+
+.nav-sign-in,
+.nav-sign-up {
+  color: black;
+  background-color: white;
+  border-radius: 7px;
+  margin-right: 1rem;
+  padding: 7px 12px;
+  text-underline-position: none;
+  position: relative;
+  bottom: 10px;
+  float: right;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.navbar-services {
+  color: white;
+  float: right;
+}

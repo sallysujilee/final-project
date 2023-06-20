@@ -1,0 +1,66 @@
+.services-container {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  background-color: #d8c4b6;
+  padding: 1rem;
+}
+
+.camera-icon-img,
+.gd-icon-img,
+.web-dev-img {
+  width: 6rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2.5rem;
+  z-index: 3;
+  margin-top: 3.8rem;
+}
+
+.photography-title,
+.gd-title,
+.web-dev-title {
+  font-size: 1.5rem;
+  font-family: Georgia, sans-serif;
+  margin-top: 2rem;
+}
+
+.gd-title {
+  margin-top: 4rem;
+}
+
+.web-dev-title {
+  margin-bottom: 2.5rem;
+}
+
+.circle {
+  width: 10rem;
+  border-radius: 50%;
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+  top: 1.5rem;
+  z-index: 1;
+  right: 0;
+  left: 0;
+}
+
+.get-started-button {
+  border: none;
+  background-color: #4f709c;
+  color: white;
+  border-radius: 15px;
+  width: 8rem;
+  height: 3rem;
+  font-size: medium;
+  margin-bottom: 2rem;
+}
+
+.get-started-button:hover {
+  cursor: pointer;
+}
