@@ -19,18 +19,6 @@ export default function App() {
   const [isAuthorizing, setIsAuthorizing] = useState(true);
 
   useEffect(() => {
-    // async function readServerData() {
-    //   const resp = await fetch('/api/hello');
-    //   const data = await resp.json();
-
-    //   console.log('Data from server:', data);
-
-    //   setServerData(data.message);
-    // }
-
-    // readServerData();
-
-    // If user logged in previously on this browser, authorize them
     const auth = localStorage.getItem(tokenKey);
     if (auth) {
       const a = JSON.parse(auth);

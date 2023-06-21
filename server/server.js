@@ -37,10 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/auth/sign-up', async (req, res, next) => {
   try {
-    //   console.log("req.body", req.body)
     const { userName, password, firstName, lastName, email, phoneNumber } =
       req.body;
-    // console.log(userName, password, firstName, lastName, email, phoneNumber)
     if (
       !userName ||
       !password ||
@@ -67,9 +65,7 @@ app.post('/api/auth/sign-up', async (req, res, next) => {
       hashedPassword,
     ];
     const result = await db.query(sql, params);
-    // console.log(result)
     const [user] = result.rows;
-    // console.log(user)
     res.status(201).json(user);
   } catch (err) {
     next(err);
@@ -130,11 +126,9 @@ app.post('/create-checkout-session/:userId', async (req, res, next) => {
     } else {
       price = 40000;
     }
-    // console.log('service', req.body.service)
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
-          // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
           price_data: {
             currency: 'usd',
             product_data: {
@@ -175,8 +169,6 @@ app.post(
     const payload = req.body;
 
     if (payload.type === 'checkout.session.completed') {
-      // console.log(JSON.stringify(payload));
-
       const firstName = payload.data.object.metadata.firstName;
       const lastName = payload.data.object.metadata.lastName;
       const companyName = payload.data.object.metadata.companyName;
@@ -187,7 +179,6 @@ app.post(
       const price = payload.data.object.metadata.price;
       const userId = payload.data.object.client_reference_id;
 
-      // console.log(firstName, lastName, companyName, email, serviceType, description, references, price, userId)
       try {
         const sql = `
       insert into "orders" ("firstName", "lastName", "companyName", "email", "serviceType", "description", "references", "price", "userId")
@@ -260,9 +251,7 @@ app.post('/api/orders/:id', async (req, res, next) => {
       id,
     ];
     const result = await db.query(sql, params);
-    // console.log(result)
     const [user] = result.rows;
-    // console.log(user)
     res.status(201).json(user);
   } catch (err) {
     next(err);

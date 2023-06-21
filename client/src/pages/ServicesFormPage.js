@@ -13,7 +13,7 @@ export default function ServiceForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // console.log("hello world")
+
     const formData = new FormData(e.target);
     const {
       companyName,
@@ -41,7 +41,7 @@ export default function ServiceForm() {
     } else {
       price = 40000;
     }
-    //create objects for post req (create an object that's going to satisfy everything from the http req); implement user.id
+
     const postRequestObject = {
       firstName: firstName,
       lastName: lastName,
@@ -52,7 +52,7 @@ export default function ServiceForm() {
       serviceType: service,
       price: price,
     };
-    // console.log("postRequestObject", postRequestObject)
+
     const req = {
       method: 'POST',
       headers: {
