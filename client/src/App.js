@@ -8,6 +8,7 @@ import NotFound from './pages/NotFoundPage';
 import './App.css';
 import Services from './pages/ServicesPage';
 import ServicesForm from './pages/ServicesFormPage';
+import ThankYouConfirm from './pages/ThankYouConfirm';
 
 const tokenKey = 'react-context-jwt';
 
@@ -18,18 +19,6 @@ export default function App() {
   const [isAuthorizing, setIsAuthorizing] = useState(true);
 
   useEffect(() => {
-    // async function readServerData() {
-    //   const resp = await fetch('/api/hello');
-    //   const data = await resp.json();
-
-    //   console.log('Data from server:', data);
-
-    //   setServerData(data.message);
-    // }
-
-    // readServerData();
-
-    // If user logged in previously on this browser, authorize them
     const auth = localStorage.getItem(tokenKey);
     if (auth) {
       const a = JSON.parse(auth);
@@ -66,6 +55,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/services" element={<Services />} />
             <Route path="/servicesform" element={<ServicesForm />} />
+            <Route path="/thankyouconfirm" element={<ThankYouConfirm />} />
           </Route>
           {/* <Route path="/favorites" /> */}
         </Routes>

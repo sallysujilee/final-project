@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../components/AppContext';
-import './ServicesPage.css';
+import './ServicesFormPage.css';
 
 export default function ServiceForm() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function ServiceForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // console.log("hello world")
+
     const formData = new FormData(e.target);
     const {
       companyName,
@@ -35,13 +35,13 @@ export default function ServiceForm() {
     );
     let price;
     if (service === 'photography') {
-      price = 240;
+      price = 24000;
     } else if (service === 'graphic-design') {
-      price = 150;
+      price = 15000;
     } else {
-      price = 400;
+      price = 40000;
     }
-    //create objects for post req (create an object that's going to satisfy everything from the http req); implement user.id
+
     const postRequestObject = {
       firstName: firstName,
       lastName: lastName,
@@ -52,7 +52,7 @@ export default function ServiceForm() {
       serviceType: service,
       price: price,
     };
-    // console.log("postRequestObject", postRequestObject)
+
     const req = {
       method: 'POST',
       headers: {
@@ -69,12 +69,15 @@ export default function ServiceForm() {
   return (
     <div className="service-form-container">
       <form
+        action={`/create-checkout-session/${user.userId}`}
+        method="POST"
         className="form-container"
         id="form-container"
-        onSubmit={handleSubmit}>
+        // onSubmit={handleSubmit}
+      >
         <div className="mb-4">
           <label className="form-label">
-            First Name
+            <div className="form-title-text">First Name</div>
             <input
               required
               autoFocus
@@ -87,7 +90,7 @@ export default function ServiceForm() {
         </div>
         <div className="mb-4">
           <label className="form-label">
-            Last Name
+            <div className="form-title-text">Last Name</div>
             <input
               required
               type="text"
@@ -99,7 +102,7 @@ export default function ServiceForm() {
         </div>
         <div className="mb-4">
           <label className="form-label">
-            Company Name
+            <div className="form-title-text">Company Name</div>
             <input
               required
               autoFocus
@@ -112,11 +115,11 @@ export default function ServiceForm() {
         </div>
         <div className="mb-4">
           <label className="form-label">
-            E-Mail
+            <div className="form-title-text">Email</div>
             <input
               required
               autoFocus
-              type="text"
+              type="email"
               name="email"
               className="form-control bg-light"
               placeholder="Text here"
@@ -124,45 +127,47 @@ export default function ServiceForm() {
           </label>
         </div>
         <div className="mb-4">
-          Please choose which service is needed
-          <select name="service" className="selectList">
-            <option value="default">-- Select an option --</option>
-            <option value="photography">
+          <div className="form-title-text">Service of choice</div>
+          <select name="service" className="select-list">
+            <option value="default" className="default-list">
+              -- Select an option --
+            </option>
+            <option value="Photography">
               Photography ($240 one day session)
             </option>
-            <option value="graphic-design">Graphic Design ($150)</option>
-            <option value="web-dev">Web Development ($400)</option>
+            <option value="Graphic Design">Graphic Design ($150)</option>
+            <option value="Web Development">Web Development ($400)</option>
           </select>
         </div>
         <div className="mb-4">
           <label className="form-label">
-            Describe purpose of service
+            <div className="form-title-text">Describe purpose of service</div>
             <input
               required
               autoFocus
               type="text"
               name="description"
-              className="form-control bg-light"
-              placeholder="Please describe what the service is for and what I can do to help."
+              className="form-control bg-light big-text-box"
+              placeholder="Describe purpose here."
             />
           </label>
         </div>
         <div className="mb-4">
           <label className="form-label">
-            References
+            <div className="form-title-text">References</div>
             <input
               required
               autoFocus
               type="text"
               name="references"
-              className="form-control bg-light"
-              placeholder="Please send links of references for the vision you have in mind."
+              className="form-control bg-light big-text-box"
+              placeholder="List references here."
             />
           </label>
         </div>
         <small>
           <div className="sign-in-line">
-            <div className="have-account-line">
+            <div className="agreement-text">
               This package contains a service that consists of a one time
               service charge. Should there be extra requirements, a fee will be
               added on after contacting the freelancer before the event takes

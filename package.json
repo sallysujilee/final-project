@@ -36,6 +36,11 @@
     "stylelint-config-standard": "^32.0.0"
   },
   "dependencies": {
-    "lib": "^5.0.1"
+    "@stripe/react-stripe-js": "^2.1.1",
+    "@stripe/stripe-js": "^1.54.1",
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "lib": "^5.0.1",
+    "stripe": "^12.9.0"
   }
 }
