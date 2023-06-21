@@ -8,6 +8,7 @@ import NotFound from './pages/NotFoundPage';
 import './App.css';
 import Services from './pages/ServicesPage';
 import ServicesForm from './pages/ServicesFormPage';
+import ThankYouConfirm from './pages/ThankYouConfirm';
 
 const tokenKey = 'react-context-jwt';
 
@@ -66,6 +67,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/services" element={<Services />} />
             <Route path="/servicesform" element={<ServicesForm />} />
+            <Route path="/thankyouconfirm" element={<ThankYouConfirm />} />
           </Route>
           {/* <Route path="/favorites" /> */}
         </Routes>

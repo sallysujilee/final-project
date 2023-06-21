@@ -5,6 +5,8 @@ import pg from 'pg';
 import ClientError from './lib/client-error.js';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
+import Stripe from 'stripe';
+import bodyParser from 'body-parser';
 
 // eslint-disable-next-line no-unused-vars -- Remove when used
 const db = new pg.Pool({
@@ -15,6 +17,8 @@ const db = new pg.Pool({
 });
 
 const app = express();
+
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
 // Create paths for static directories
 const reactStaticDir = new URL('../client/build', import.meta.url).pathname;
@@ -28,6 +32,8 @@ app.use(express.json());
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/auth/sign-up', async (req, res, next) => {
   try {
@@ -103,6 +109,114 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
   }
 });
 
+app.post('/create-checkout-session/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const {
+      service,
+      description,
+      references,
+      email,
+      firstName,
+      lastName,
+      companyName,
+    } = req.body;
+
+    let price;
+    if (service === 'photography') {
+      price = 24000;
+    } else if (service === 'graphic-design') {
+      price = 15000;
+    } else {
+      price = 40000;
+    }
+    // console.log('service', req.body.service)
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: service,
+              description: description,
+            },
+            unit_amount: price,
+          },
+          quantity: 1,
+        },
+      ],
+      client_reference_id: userId,
+      customer_email: email,
+      metadata: {
+        references: references,
+        firstName: firstName,
+        lastName: lastName,
+        companyName: companyName,
+        service: service,
+        description: description,
+        price: price,
+      },
+      mode: 'payment',
+      success_url: 'http://localhost:3000/thankyouconfirm',
+      cancel_url: 'http://localhost:3000/serviceformpage',
+    });
+
+    res.redirect(303, session.url);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post(
+  '/webhook',
+  bodyParser.raw({ type: 'application/json' }),
+  async (req, res, next) => {
+    const payload = req.body;
+
+    if (payload.type === 'checkout.session.completed') {
+      // console.log(JSON.stringify(payload));
+
+      const firstName = payload.data.object.metadata.firstName;
+      const lastName = payload.data.object.metadata.lastName;
+      const companyName = payload.data.object.metadata.companyName;
+      const email = payload.data.object.customer_email;
+      const serviceType = payload.data.object.metadata.service;
+      const description = payload.data.object.metadata.description;
+      const references = payload.data.object.metadata.references;
+      const price = payload.data.object.metadata.price;
+      const userId = payload.data.object.client_reference_id;
+
+      // console.log(firstName, lastName, companyName, email, serviceType, description, references, price, userId)
+      try {
+        const sql = `
+      insert into "orders" ("firstName", "lastName", "companyName", "email", "serviceType", "description", "references", "price", "userId")
+        values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        returning "firstName", "lastName", "companyName", "email", "serviceType", "description", "references", "price"
+    `;
+        const params = [
+          firstName,
+          lastName,
+          companyName,
+          email,
+          serviceType,
+          description,
+          references,
+          price,
+          userId,
+        ];
+        const result = await db.query(sql, params);
+        const [user] = result.rows;
+        res.status(201).json(user);
+      } catch (err) {
+        next(err);
+      }
+    } else {
+      res.status(200).json(payload);
+    }
+  }
+);
+
 app.post('/api/orders/:id', async (req, res, next) => {
   console.log('correct endpoint hit');
   const { id } = req.params;
@@ -154,17 +268,6 @@ app.post('/api/orders/:id', async (req, res, next) => {
     next(err);
   }
 });
-// destructure JSON from HTTP req into terminal
-// log values (console.log)
-// write SQL query to insert new row into 'orders' database table
-//   const sql = `
-//   insert "userId",
-//       "hashedPassword"
-//     from "users"
-//   where "userName" = $1
-// `;
-// ***but put in all the stuff from the forms (firstname, etc.)
-// });
 
 /**
  * Serves React's index.html if no api route matches.

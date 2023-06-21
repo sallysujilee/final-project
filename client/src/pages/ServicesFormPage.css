@@ -1,0 +1,47 @@
+.form-container {
+  background-color: #d8c4b6;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding: 3rem 10rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.form-title-text {
+  margin-bottom: 0.5rem;
+}
+
+.select-list {
+  border: none;
+  height: 2rem;
+  border-radius: 5px;
+}
+
+.default-list {
+  color: grey;
+}
+
+.agreement-text {
+  margin-bottom: 1rem;
+}
+
+.submit-button {
+  border: none;
+  background-color: #4f709c;
+  color: white;
+  border-radius: 15px;
+  width: 6rem;
+  height: 2.5rem;
+  font-size: medium;
+}
+
+.submit-button:hover {
+  cursor: pointer;
+}
+
+.big-text-box {
+  width: 40%;
+  height: 5rem;
+}
